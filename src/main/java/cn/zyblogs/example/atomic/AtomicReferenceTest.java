@@ -1,4 +1,4 @@
-package cn.zyblogs.atomic;
+package cn.zyblogs.example.atomic;
 
 import cn.zyblogs.annoations.ThreadSafe;
 import lombok.extern.slf4j.Slf4j;
@@ -6,15 +6,15 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * @Title: AtomicExample4.java
- * @Package cn.zyblogs.atomic
+ * @Title: AtomicReferenceTest.java
+ * @Package cn.zyblogs.example.atomic
  * @Description: TODO
  * @Author ZhangYB
  * @Version V1.0
  */
 @ThreadSafe
 @Slf4j
-public class AtomicExample4 {
+public class AtomicReferenceTest {
 
     private static AtomicReference<Integer> count = new AtomicReference<>(0);
 

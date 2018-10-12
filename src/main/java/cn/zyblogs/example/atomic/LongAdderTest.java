@@ -1,23 +1,25 @@
-package cn.zyblogs.example.count;
+package cn.zyblogs.example.atomic;
 
-import cn.zyblogs.annoations.NotThreadSafe;
+import cn.zyblogs.annoations.ThreadSafe;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.LongAdder;
 
 /**
- * @Title: ConcurrentyTest.java
- * @Package cn.zyblogs.test
+ * @Title: LongAdderTest.java
+ * @Package cn.zyblogs.example.atomic
  * @Description: TODO
  * @Author ZhangYB
  * @Version V1.0
  */
 @Slf4j
-@NotThreadSafe
-public class CountExample1 {
+@ThreadSafe
+public class LongAdderTest {
 
     // 请求总数
     private static int clientTotal = 5000;
@@ -27,7 +29,7 @@ public class CountExample1 {
      */
     private static int threadTotal = 50;
 
-    public static int count = 0;
+    public static LongAdder count = new LongAdder();
 
     public static void main(String[] args) {
         // 线程池
@@ -65,7 +67,11 @@ public class CountExample1 {
     }
 
     private static void add(){
-        count++;
+        // 先增加 后后去值
+        count.increment();
+
+        // 先获取值 在增加
+//        count.getAndIncrement();
 
     }
 }

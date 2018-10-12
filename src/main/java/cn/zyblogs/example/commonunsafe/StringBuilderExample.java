@@ -1,25 +1,23 @@
-package cn.zyblogs.example.count;
+package cn.zyblogs.example.commonunsafe;
 
 import cn.zyblogs.annoations.NotThreadSafe;
-import cn.zyblogs.annoations.ThreadSafe;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * @Title: ConcurrentyTest.java
- * @Package cn.zyblogs.test
- * @Description: TODO
+ * @Title: StringBuilderExample.java
+ * @Package cn.zyblogs.example.commonunsafe
+ * @Description: TODO 不安全
  * @Author ZhangYB
  * @Version V1.0
  */
 @Slf4j
-@ThreadSafe
-public class CountExample2 {
+@NotThreadSafe
+public class StringBuilderExample {
 
     // 请求总数
     private static int clientTotal = 5000;
@@ -29,7 +27,7 @@ public class CountExample2 {
      */
     private static int threadTotal = 50;
 
-    public static AtomicInteger count = new AtomicInteger(0);
+    public static StringBuilder stringBuilder = new StringBuilder();
 
     public static void main(String[] args) {
         // 线程池
@@ -38,7 +36,7 @@ public class CountExample2 {
         // 信号量  同时允许并发的线程数
         final Semaphore semaphore = new Semaphore(threadTotal);
 
-        // 所有的请求结束统计结果
+        // 所有的请求次数结束统计结果
         CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
 
         for (int i = 0 ; i < clientTotal; i ++){
@@ -46,7 +44,7 @@ public class CountExample2 {
                 try {
                     // 是否允许被执行 如果达到一定并发数 可能会临时阻塞
                     semaphore.acquire();
-                    add();
+                    update();
                     // 释放
                     semaphore.release();
                 } catch (InterruptedException e) {
@@ -60,18 +58,14 @@ public class CountExample2 {
             countDownLatch.await();
             // 关闭线程池
             executorService.shutdown();
-            log.info("count:{}" ,count.get());
+            log.info("length:{}" ,stringBuilder.length());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private static void add(){
-        // 先增加 后后去值
-        count.incrementAndGet();
-
-        // 先获取值 在增加
-//        count.getAndIncrement();
+    private static void update(){
+      stringBuilder.append("1");
 
     }
 }
