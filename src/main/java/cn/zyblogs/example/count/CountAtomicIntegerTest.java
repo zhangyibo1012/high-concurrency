@@ -1,6 +1,5 @@
 package cn.zyblogs.example.count;
 
-import cn.zyblogs.annoations.NotThreadSafe;
 import cn.zyblogs.annoations.ThreadSafe;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,14 +30,14 @@ public class CountAtomicIntegerTest {
 
     public static AtomicInteger count = new AtomicInteger(0);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // 线程池
         ExecutorService executorService = Executors.newCachedThreadPool();
 
         // 信号量  同时允许并发的线程数
         final Semaphore semaphore = new Semaphore(threadTotal);
 
-        // 所有的请求结束统计结果
+        // 定义计数器闭锁
         CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
 
         for (int i = 0 ; i < clientTotal; i ++){
@@ -52,18 +51,15 @@ public class CountAtomicIntegerTest {
                 } catch (InterruptedException e) {
                     log.error("exception", e);
                 }
+                // 每次减少1
                 countDownLatch.countDown();
             });
         }
-        try {
             //  countDownLatch.countDown();减到0 不再等待
             countDownLatch.await();
             // 关闭线程池
             executorService.shutdown();
             log.info("count:{}" ,count.get());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     private static void add(){

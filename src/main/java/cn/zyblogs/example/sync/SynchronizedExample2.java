@@ -16,35 +16,28 @@ import java.util.stream.IntStream;
 @Slf4j
 public class SynchronizedExample2 {
 
-    /**
-     *   修饰一个类
-     */
-   public static void test1(){
 
+   public static void test1(){
+       //  修饰一个类
         synchronized (SynchronizedExample2.class){
             IntStream.range(0, 10).forEach((i)-> log.info("test1 - {}",i ));
         }
     }
 
-    /**
-     *  修饰一个静态方法
-     */
     public static synchronized void test2(){
        IntStream.range(0, 10).forEach((i)-> log.info("test2 - {}",i ));
     }
-
     public static void main(String[] args) {
         SynchronizedExample2 example = new SynchronizedExample2();
         SynchronizedExample2 example2 = new SynchronizedExample2();
         ExecutorService executorService = Executors.newCachedThreadPool();
-
-//        executorService.execute(()-> example.test1());
-//        executorService.execute(()-> example.test1());
-
-        executorService.execute(()-> test1());
-        executorService.execute(()-> test2());
-
+        executorService.execute(() -> test1());
+        executorService.execute(() -> test2());
         executorService.shutdown();
+//        executorService.execute(()-> example.test1());
+//        executorService.execute(()-> example.test1());
+
+
 
 
     }

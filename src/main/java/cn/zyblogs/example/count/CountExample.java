@@ -36,7 +36,7 @@ public class CountExample {
         // 信号量  同时允许并发的线程数
         final Semaphore semaphore = new Semaphore(threadTotal);
 
-        // 所有的请求次数结束统计结果
+        //定义计数器闭锁
         CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
 
         for (int i = 0 ; i < clientTotal; i ++){

@@ -16,23 +16,10 @@ import java.util.stream.IntStream;
 @Slf4j
 public class SynchronizedExample {
 
-   public void test1(){
-        // 修饰代码块
-        synchronized (this){
-            IntStream.range(0, 10).forEach((i)-> log.info("test1 - {}",i ));
-        }
-    }
-
-    /**
-     *  修饰方法
-     */
-    public synchronized void test2(){
-       IntStream.range(0, 10).forEach((i)-> log.info("test2 - {}",i ));
-    }
-
     public static void main(String[] args) {
         SynchronizedExample example = new SynchronizedExample();
         SynchronizedExample example2 = new SynchronizedExample();
+        //使用线程池方法进行测试：
         ExecutorService executorService = Executors.newCachedThreadPool();
 
 //        executorService.execute(()-> example.test1());
@@ -44,5 +31,19 @@ public class SynchronizedExample {
         executorService.shutdown();
 
 
+    }
+
+//    /**
+//     *  修饰方法
+//     */
+//    public synchronized void test2(){
+//       IntStream.range(0, 10).forEach((i)-> log.info("test2 - {}",i ));
+//    }
+
+   public void test1(){
+       // 修饰代码块 被修饰的代码称为同步语句块，作用的范围是大括号括起来的部分。作用的对象是调用这段代码的对象。
+        synchronized (this){
+            IntStream.range(0, 10).forEach((i)-> log.info("test1 - {}",i ));
+        }
     }
 }

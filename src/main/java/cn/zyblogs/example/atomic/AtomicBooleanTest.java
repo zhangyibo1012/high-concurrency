@@ -29,6 +29,12 @@ public class AtomicBooleanTest {
      */
     private static int threadTotal = 50;
 
+
+
+    /**
+     *   原子性操作 从false变成true 只会执行一次 剩下4999次都是true
+     *   实际中让某一段代码只执行一次 可以参考
+     */
     private static AtomicBoolean isHappend = new AtomicBoolean();
 
     public static void main(String[] args) throws InterruptedException {
@@ -39,7 +45,7 @@ public class AtomicBooleanTest {
         //  信号量  同时允许并发的线程数
         final Semaphore semaphore = new Semaphore(threadTotal);
 
-        // 所有的请求次数结束统计结果
+        // 定义计数器闭锁
         CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
 
         for (int i = 0; i < clientTotal ; i ++){
@@ -65,11 +71,6 @@ public class AtomicBooleanTest {
         executorService.shutdown();
         log.info("isHappend:{}", isHappend.get());
     }
-
-    /**
-     *   原子性操作 从false变成true 只会执行一次 剩下4999次都是true
-     *   实际中让某一段代码只执行一次 可以参考
-     */
     private static void test() {
         // 如果当前值是false 把它变成true
         if (isHappend.compareAndSet(false, true)){
