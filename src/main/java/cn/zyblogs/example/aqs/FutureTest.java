@@ -22,7 +22,6 @@ public class FutureTest {
             return "Done.";
         }
     }
-
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newCachedThreadPool();
         Future<String> future = executor.submit(new MyCallable());

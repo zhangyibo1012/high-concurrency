@@ -19,7 +19,8 @@ public class ThreadPoolTest2 {
 
         for (int i = 0 ; i < 10 ; i ++){
             final int index = i;
-            executorService.execute(() -> log.info("task:{}", index));
+            executorService.execute(() ->
+                    log.info("task:{}", index));
         }
 
         executorService.shutdown();

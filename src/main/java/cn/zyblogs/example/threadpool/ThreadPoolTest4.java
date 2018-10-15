@@ -21,14 +21,11 @@ import java.util.concurrent.TimeUnit;
 public class ThreadPoolTest4 {
     public static void main(String[] args) {
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(5);
-
 //        for (int i = 0 ; i < 10 ; i ++){
 //            final int index = i;
 //            executorService.execute(() -> log.info("task:{}", index));
 //        }
-
         executorService.schedule(() -> log.warn("schedule run"), 3, TimeUnit.SECONDS);
-
         /**
          *  延迟1秒 每隔3秒执行一次 一直执行
          */
