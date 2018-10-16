@@ -16,19 +16,19 @@ import java.util.Map;
 @Slf4j
 public class ImmutableExample {
 
- private  static Map<Integer , Integer> map =  Maps.newHashMap();
+    private static Map<Integer, Integer> map = Maps.newHashMap();
 
- static {
-     map.put(1,2 );
-     map.put(3,4 );
-     map.put(5,6 );
-     // 不可变对象
-     map = Collections.unmodifiableMap(map);
- }
+    static {
+        map.put(1, 2);
+        map.put(3, 4);
+        map.put(5, 6);
+        // 不可变对象
+        map = Collections.unmodifiableMap(map);
+    }
 
     public static void main(String[] args) {
-        map.put(1,3 );
-        log.info("{}",map.get(1) );
+        map.put(1, 3);
+        log.info("{}", map.get(1));
     }
 
 }

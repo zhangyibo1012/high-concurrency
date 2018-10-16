@@ -19,8 +19,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class Config implements WebMvcConfigurer {
 
     @Bean
-    public FilterRegistrationBean httpFilter(){
-        FilterRegistrationBean registrationBean  = new FilterRegistrationBean();
+    public FilterRegistrationBean httpFilter() {
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         // 注册过滤器 拦截
         registrationBean.setFilter(new HttpFilter());
         // 拦截的路径

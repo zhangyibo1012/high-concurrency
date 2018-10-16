@@ -26,7 +26,7 @@ public class HttpFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         log.info("do filter , {} ，{}", Thread.currentThread().getId(), request.getServletPath());
         RequestHolder.add(Thread.currentThread().getId());
-        filterChain.doFilter(servletRequest,servletResponse );
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

@@ -16,15 +16,15 @@ import java.util.concurrent.FutureTask;
 public class FutureTaskTest {
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         FutureTask<String> futureTask = new FutureTask<>(() -> {
-            log.info("do something in callable" );
+            log.info("do something in callable");
             Thread.sleep(5_000);
             return "Done.";
         });
 
         new Thread(futureTask).start();
-        log.info("do something in main" );
+        log.info("do something in main");
         Thread.sleep(1_000);
         String result = futureTask.get();
-        log.info("result：{}", result );
+        log.info("result：{}", result);
     }
 }

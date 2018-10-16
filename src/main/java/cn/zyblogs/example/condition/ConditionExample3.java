@@ -30,7 +30,7 @@ public class ConditionExample3 {
         IntStream.range(0, 6).forEach(ConditionExample3::beginProduce);
         IntStream.range(0, 13).forEach(ConditionExample3::beginConsume);
 
-        while (true){
+        while (true) {
             sleepThread(5);
             System.out.println("=================================");
 //            System.out.println("PRODUCE_COND.getWaitQueueLength>" + lock.getWaitQueueLength(PRODUCE_COND));
@@ -40,28 +40,28 @@ public class ConditionExample3 {
         }
     }
 
-    private static void beginProduce(int i ){
+    private static void beginProduce(int i) {
         new Thread(() -> {
-          while (true){
-              produce();
-              sleepThread(2);
-          }
-        } , "P-" + i).start();
+            while (true) {
+                produce();
+                sleepThread(2);
+            }
+        }, "P-" + i).start();
     }
 
-    private static void beginConsume(int i ){
+    private static void beginConsume(int i) {
         new Thread(() -> {
             while (true) {
                 consume();
                 sleepThread(2);
             }
-        } , "C-" + i).start();
+        }, "C-" + i).start();
     }
 
-    private static void produce(){
+    private static void produce() {
         try {
             lock.lock();
-            while (TIMESATMP_POOL.size() >= MAX_CAPAITY){
+            while (TIMESATMP_POOL.size() >= MAX_CAPAITY) {
                 PRODUCE_COND.await();
             }
 
@@ -78,10 +78,10 @@ public class ConditionExample3 {
         }
     }
 
-    private static void consume(){
+    private static void consume() {
         try {
             lock.lock();
-            while (TIMESATMP_POOL.isEmpty()){
+            while (TIMESATMP_POOL.isEmpty()) {
                 CONSUME_COND.await();
             }
 
@@ -96,7 +96,7 @@ public class ConditionExample3 {
         }
     }
 
-    private static void sleepThread(long sec){
+    private static void sleepThread(long sec) {
         try {
             TimeUnit.SECONDS.sleep(sec);
         } catch (InterruptedException e) {

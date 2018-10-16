@@ -14,23 +14,24 @@ import java.util.concurrent.*;
 @Slf4j
 public class FutureTest {
 
-    static class MyCallable implements Callable<String>{
-        @Override
-        public String call() throws Exception {
-            log.info("do something in callable" );
-            Thread.sleep(5_000);
-            return "Done.";
-        }
-    }
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newCachedThreadPool();
         Future<String> future = executor.submit(new MyCallable());
-        log.info("do something in main" );
+        log.info("do something in main");
         Thread.sleep(1_000);
         // 没有执行完成会等待
         String result = future.get();
-        log.info("result：{}", result );
+        log.info("result：{}", result);
 
 
+    }
+
+    static class MyCallable implements Callable<String> {
+        @Override
+        public String call() throws Exception {
+            log.info("do something in callable");
+            Thread.sleep(5_000);
+            return "Done.";
+        }
     }
 }

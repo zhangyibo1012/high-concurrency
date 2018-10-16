@@ -17,16 +17,17 @@ import java.util.stream.IntStream;
 public class SynchronizedExample2 {
 
 
-   public static void test1(){
-       //  修饰一个类
-        synchronized (SynchronizedExample2.class){
-            IntStream.range(0, 10).forEach((i)-> log.info("test1 - {}",i ));
+    public static void test1() {
+        //  修饰一个类
+        synchronized (SynchronizedExample2.class) {
+            IntStream.range(0, 10).forEach((i) -> log.info("test1 - {}", i));
         }
     }
 
-    public static synchronized void test2(){
-       IntStream.range(0, 10).forEach((i)-> log.info("test2 - {}",i ));
+    public static synchronized void test2() {
+        IntStream.range(0, 10).forEach((i) -> log.info("test2 - {}", i));
     }
+
     public static void main(String[] args) {
         SynchronizedExample2 example = new SynchronizedExample2();
         SynchronizedExample2 example2 = new SynchronizedExample2();
@@ -36,8 +37,6 @@ public class SynchronizedExample2 {
         executorService.shutdown();
 //        executorService.execute(()-> example.test1());
 //        executorService.execute(()-> example.test1());
-
-
 
 
     }

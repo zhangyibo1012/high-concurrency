@@ -2,8 +2,6 @@ package cn.zyblogs.example.aqs;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,7 +20,6 @@ public class CountDownLatchTest {
     private final static int THREAD_TOTAL = 200;
 
     public static void main(String[] args) throws InterruptedException {
-
 
 
         ExecutorService executorService = Executors.newCachedThreadPool();

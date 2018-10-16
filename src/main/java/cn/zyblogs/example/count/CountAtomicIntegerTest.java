@@ -20,15 +20,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 @ThreadSafe
 public class CountAtomicIntegerTest {
 
+    public static AtomicInteger count = new AtomicInteger(0);
     // 请求总数
     private static int clientTotal = 5000;
-
     /**
-     *  同时并发执行的线程数
+     * 同时并发执行的线程数
      */
     private static int threadTotal = 50;
-
-    public static AtomicInteger count = new AtomicInteger(0);
 
     public static void main(String[] args) throws InterruptedException {
         // 线程池
@@ -40,8 +38,8 @@ public class CountAtomicIntegerTest {
         // 定义计数器闭锁
         CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
 
-        for (int i = 0 ; i < clientTotal; i ++){
-            executorService.execute(()->{
+        for (int i = 0; i < clientTotal; i++) {
+            executorService.execute(() -> {
                 try {
                     // 是否允许被执行 如果达到一定并发数 可能会临时阻塞
                     semaphore.acquire();
@@ -55,14 +53,14 @@ public class CountAtomicIntegerTest {
                 countDownLatch.countDown();
             });
         }
-            //  countDownLatch.countDown();减到0 不再等待
-            countDownLatch.await();
-            // 关闭线程池
-            executorService.shutdown();
-            log.info("count:{}" ,count.get());
+        //  countDownLatch.countDown();减到0 不再等待
+        countDownLatch.await();
+        // 关闭线程池
+        executorService.shutdown();
+        log.info("count:{}", count.get());
     }
 
-    private static void add(){
+    private static void add() {
         // 先增加 后后去值
         count.incrementAndGet();
 

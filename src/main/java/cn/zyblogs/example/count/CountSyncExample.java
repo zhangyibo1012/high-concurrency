@@ -19,15 +19,13 @@ import java.util.concurrent.Semaphore;
 @NotThreadSafe
 public class CountSyncExample {
 
+    public static int count = 0;
     // 请求总数
     private static int clientTotal = 5000;
-
     /**
-     *  同时并发执行的线程数
+     * 同时并发执行的线程数
      */
     private static int threadTotal = 50;
-
-    public static int count = 0;
 
     public static void main(String[] args) {
         // 线程池
@@ -39,8 +37,8 @@ public class CountSyncExample {
         // 定义计数器闭锁
         CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
 
-        for (int i = 0 ; i < clientTotal; i ++){
-            executorService.execute(()->{
+        for (int i = 0; i < clientTotal; i++) {
+            executorService.execute(() -> {
                 try {
                     // 是否允许被执行 如果达到一定并发数 可能会临时阻塞
                     semaphore.acquire();
@@ -58,13 +56,13 @@ public class CountSyncExample {
             countDownLatch.await();
             // 关闭线程池
             executorService.shutdown();
-            log.info("count:{}" ,count);
+            log.info("count:{}", count);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private synchronized static void add(){
+    private synchronized static void add() {
         count++;
 
     }

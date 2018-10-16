@@ -1,6 +1,5 @@
 package cn.zyblogs.example.threadlocal;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ThreadLocalController {
 
     @GetMapping(value = "test")
-    public Long test(){
+    public Long test() {
         return RequestHolder.getId();
     }
 }

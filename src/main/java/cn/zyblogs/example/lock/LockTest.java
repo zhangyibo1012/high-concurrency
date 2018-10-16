@@ -20,42 +20,39 @@ import java.util.concurrent.locks.ReentrantLock;
 public class LockTest {
 
     // 请求总数
-    private static final int  CLIENT_TOTAL = 5000;
-
+    private static final int CLIENT_TOTAL = 5000;
+    private static final Lock lock = new ReentrantLock();
     /**
-     *  同时并发允许的执行数
+     * 同时并发允许的执行数
      */
     private static int threadTotal = 200;
-
-    private static int count = 0 ;
-
-    private static final Lock lock = new ReentrantLock();
+    private static int count = 0;
 
     public static void main(String[] args) throws InterruptedException {
-        ExecutorService executor =  Executors.newCachedThreadPool();
+        ExecutorService executor = Executors.newCachedThreadPool();
         final Semaphore semaphore = new Semaphore(threadTotal);
         final CountDownLatch countDownLatch = new CountDownLatch(CLIENT_TOTAL);
-        for (int i  = 0 ; i < CLIENT_TOTAL; i++){
-                executor.execute(()->{
+        for (int i = 0; i < CLIENT_TOTAL; i++) {
+            executor.execute(() -> {
 
-                    try {
-                        // 获取一个许可
-                        semaphore.acquire();
-                        add();
-                        // 释放
-                        semaphore.release();
-                    } catch (InterruptedException e) {
-                        log.info("exception", e );
-                    }finally {
-                        // 执行一次 减少1
-                        countDownLatch.countDown();
-                    }
-                });
+                try {
+                    // 获取一个许可
+                    semaphore.acquire();
+                    add();
+                    // 释放
+                    semaphore.release();
+                } catch (InterruptedException e) {
+                    log.info("exception", e);
+                } finally {
+                    // 执行一次 减少1
+                    countDownLatch.countDown();
+                }
+            });
         }
         // countDownLatch.countDown();较少到0 停止等待 继续往下执行
         countDownLatch.await();
         executor.shutdown();
-        log.info("count:{}",count );
+        log.info("count:{}", count);
     }
 
     private static void add() {

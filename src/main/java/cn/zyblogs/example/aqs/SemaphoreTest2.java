@@ -24,9 +24,9 @@ public class SemaphoreTest2 {
         // 允许的并发数
         final Semaphore semaphore = new Semaphore(3);
 
-        for (int i = 0; i < THREAD_TOTAL ; i ++){
-            final int threadNum = i ;
-            executorService.execute(()->{
+        for (int i = 0; i < THREAD_TOTAL; i++) {
+            final int threadNum = i;
+            executorService.execute(() -> {
                 try {
                     // 获取三个许可
                     semaphore.acquire(3);
@@ -38,12 +38,12 @@ public class SemaphoreTest2 {
                 }
             });
         }
-        log.info("finish..." );
+        log.info("finish...");
         executorService.shutdown();
     }
 
     private static void test(int threadNum) throws InterruptedException {
-        log.info("{}",threadNum );
+        log.info("{}", threadNum);
         Thread.sleep(1000);
     }
 }

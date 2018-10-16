@@ -14,17 +14,17 @@ import java.util.Arrays;
 @Slf4j
 public class UnSafePublish {
 
-    private String[]  states = {"a" , "b" , "c"};
-
-    public String[] getStates() {
-        return states;
-    }
+    private String[] states = {"a", "b", "c"};
 
     public static void main(String[] args) {
         UnSafePublish unSafePublish = new UnSafePublish();
-        log.info("{}",Arrays.toString(unSafePublish.getStates()));
+        log.info("{}", Arrays.toString(unSafePublish.getStates()));
 
         unSafePublish.getStates()[0] = "d";
-        log.info("{}",Arrays.toString(unSafePublish.getStates()));
+        log.info("{}", Arrays.toString(unSafePublish.getStates()));
+    }
+
+    public String[] getStates() {
+        return states;
     }
 }

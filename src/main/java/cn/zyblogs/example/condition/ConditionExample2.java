@@ -14,29 +14,29 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class ConditionExample2 {
     /**
-     *  是否公平的锁 true/false
+     * 是否公平的锁 true/false
      */
     private final static ReentrantLock lock = new ReentrantLock(true);
 
     /**
-     *  通过ReentrantLock获取condition
+     * 通过ReentrantLock获取condition
      */
-    private final static Condition condition =  lock.newCondition();
+    private final static Condition condition = lock.newCondition();
 
     private static int data = 0;
 
     private static volatile boolean noUse = true;
 
-    private static void buildData(){
+    private static void buildData() {
         try {
             lock.lock();
             // 判断数据是否被使用
-            while (noUse){
+            while (noUse) {
                 // 数据未被使用  停下来 等待消费
                 condition.await();
             }
 
-            data ++;
+            data++;
             Optional.of("P: " + data).ifPresent(System.out::println);
             TimeUnit.SECONDS.sleep(1);
             noUse = true;
@@ -49,10 +49,10 @@ public class ConditionExample2 {
         }
     }
 
-    private static void useData(){
+    private static void useData() {
         try {
             lock.lock();
-            while (!noUse){
+            while (!noUse) {
                 condition.await();
             }
 
@@ -69,20 +69,21 @@ public class ConditionExample2 {
     }
 
     /**
-     *  1.不使用condition ？？？
-     *  2.the producer get the lock but invoke await method and not jump out the lock statement block why the consumer can get the lock still？
-     *  3.not use the lock only use the condition？
+     * 1.不使用condition ？？？
+     * 2.the producer get the lock but invoke await method and not jump out the lock statement block why the consumer can get the lock still？
+     * 3.not use the lock only use the condition？
+     *
      * @param args
      */
     public static void main(String[] args) {
 
         new Thread(() -> {
-            while (true){
+            while (true) {
                 buildData();
             }
         }).start();
 
-        for (int i = 0; i < 2 ; i ++) {
+        for (int i = 0; i < 2; i++) {
             new Thread(() -> {
                 while (true) {
                     useData();

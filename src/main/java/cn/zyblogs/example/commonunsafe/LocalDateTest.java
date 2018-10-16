@@ -16,7 +16,7 @@ import static cn.zyblogs.example.utils.DateUtils.getLocalDateTime;
  * @Title: JodaTime.java
  * @Package cn.zyblogs.example.commonunsafe
  * @Description: TODO SimpleDateFormat 线程不安全 不建议用
- *                 hashset 线程不安全
+ * hashset 线程不安全
  * @Author ZhangYB
  * @Version V1.0
  */
@@ -27,10 +27,9 @@ public class LocalDateTest {
     private static int clientTotal = 5000;
 
     /**
-     *  同时并发执行的线程数
+     * 同时并发执行的线程数
      */
     private static int threadTotal = 200;
-
 
 
     public static void main(String[] args) {
@@ -43,9 +42,9 @@ public class LocalDateTest {
         // 所有的请求次数结束统计结果
         CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
 
-        for (int i = 0 ; i < clientTotal; i ++){
-            final int count = i ;
-            executorService.execute(()->{
+        for (int i = 0; i < clientTotal; i++) {
+            final int count = i;
+            executorService.execute(() -> {
                 try {
                     // 是否允许被执行 如果达到一定并发数 可能会临时阻塞
                     semaphore.acquire();
@@ -69,9 +68,9 @@ public class LocalDateTest {
         }
     }
 
-    private static void update(int i ) {
+    private static void update(int i) {
 
-        log.info("{} , {}" , i ,DateUtils.formatTime(getLocalDateTime() ,GlobalConstant.DATE_FORMAT));
+        log.info("{} , {}", i, DateUtils.formatTime(getLocalDateTime(), GlobalConstant.DATE_FORMAT));
 
     }
 }

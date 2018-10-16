@@ -25,8 +25,8 @@ public class SynchronizedExample {
 //        executorService.execute(()-> example.test1());
 //        executorService.execute(()-> example.test1());
 
-        executorService.execute(()-> example.test1());
-        executorService.execute(()-> example2.test1());
+        executorService.execute(() -> example.test1());
+        executorService.execute(() -> example2.test1());
 
         executorService.shutdown();
 
@@ -40,10 +40,10 @@ public class SynchronizedExample {
 //       IntStream.range(0, 10).forEach((i)-> log.info("test2 - {}",i ));
 //    }
 
-   public void test1(){
-       // 修饰代码块 被修饰的代码称为同步语句块，作用的范围是大括号括起来的部分。作用的对象是调用这段代码的对象。
-        synchronized (this){
-            IntStream.range(0, 10).forEach((i)-> log.info("test1 - {}",i ));
+    public void test1() {
+        // 修饰代码块 被修饰的代码称为同步语句块，作用的范围是大括号括起来的部分。作用的对象是调用这段代码的对象。
+        synchronized (this) {
+            IntStream.range(0, 10).forEach((i) -> log.info("test1 - {}", i));
         }
     }
 }

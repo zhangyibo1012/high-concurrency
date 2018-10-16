@@ -25,15 +25,14 @@ public class AtomicBooleanTest {
     private static int clientTotal = 5000;
 
     /**
-     *  同时并发执行的线程数
+     * 同时并发执行的线程数
      */
     private static int threadTotal = 50;
 
 
-
     /**
-     *   原子性操作 从false变成true 只会执行一次 剩下4999次都是true
-     *   实际中让某一段代码只执行一次 可以参考
+     * 原子性操作 从false变成true 只会执行一次 剩下4999次都是true
+     * 实际中让某一段代码只执行一次 可以参考
      */
     private static AtomicBoolean isHappend = new AtomicBoolean();
 
@@ -48,8 +47,8 @@ public class AtomicBooleanTest {
         // 定义计数器闭锁
         CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
 
-        for (int i = 0; i < clientTotal ; i ++){
-            executorService.execute(()->{
+        for (int i = 0; i < clientTotal; i++) {
+            executorService.execute(() -> {
 
                 try {
                     // 是否允许被执行 如果达到一定的线程并发数 可能会发生阻塞
@@ -71,9 +70,10 @@ public class AtomicBooleanTest {
         executorService.shutdown();
         log.info("isHappend:{}", isHappend.get());
     }
+
     private static void test() {
         // 如果当前值是false 把它变成true
-        if (isHappend.compareAndSet(false, true)){
+        if (isHappend.compareAndSet(false, true)) {
             log.info("execute");
         }
     }

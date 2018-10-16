@@ -14,6 +14,21 @@ public class SingletonEnum {
     private SingletonEnum() {
     }
 
+    public static SingletonEnum getInstance() {
+        return Singleton.INSTANCE.getInstance();
+    }
+
+    public static void main(String[] args) {
+
+
+        IntStream.rangeClosed(1, 100).forEach(i -> new Thread(String.valueOf(i)) {
+            @Override
+            public void run() {
+                System.out.println(SingletonEnum.getInstance());
+            }
+        }.start());
+    }
+
     /**
      * 枚举类型 构造函数私有,只会被装载一次。 线程安全的
      */
@@ -30,22 +45,6 @@ public class SingletonEnum {
             return instance;
         }
 
-    }
-
-    public static SingletonEnum getInstance() {
-        return Singleton.INSTANCE.getInstance();
-    }
-
-    public static void main(String[] args) {
-
-
-
-        IntStream.rangeClosed(1, 100).forEach(i -> new Thread(String.valueOf(i)) {
-            @Override
-            public void run() {
-                System.out.println(SingletonEnum.getInstance());
-            }
-        }.start());
     }
 
 

@@ -9,7 +9,7 @@ package cn.zyblogs.example.singleton;
  */
 public class SingletonExample {
 
-    private SingletonExample(){
+    private SingletonExample() {
 
     }
 

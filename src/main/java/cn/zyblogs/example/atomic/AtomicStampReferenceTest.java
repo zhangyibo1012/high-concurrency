@@ -26,7 +26,7 @@ public class AtomicStampReferenceTest {
                 boolean success = atomicRef.compareAndSet(100, 101, atomicRef.getStamp(), atomicRef.getStamp() + 1);
                 System.out.println(success);
                 // 把101变成100 1  2
-                success =  atomicRef.compareAndSet(101, 100, atomicRef.getStamp(), atomicRef.getStamp() + 1);
+                success = atomicRef.compareAndSet(101, 100, atomicRef.getStamp(), atomicRef.getStamp() + 1);
                 System.out.println(success);
                 System.out.println("t1 atomicRef.getStamp() " + atomicRef.getStamp());
             } catch (InterruptedException e) {

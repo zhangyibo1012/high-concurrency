@@ -36,7 +36,7 @@ public class CountDownLatchTest2 {
             });
         }
         //  countDownLatch.countDown();等待10毫秒 执行finish 之前给定的线程还会继续执行完
-        countDownLatch.await(10 ,TimeUnit.MILLISECONDS);
+        countDownLatch.await(10, TimeUnit.MILLISECONDS);
         log.info("finish");
         // 关闭线程池
         executorService.shutdown();

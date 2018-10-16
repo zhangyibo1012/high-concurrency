@@ -15,25 +15,23 @@ import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
  */
 @ThreadSafe
 @Slf4j
-public class AtomicIntegerFieldUpdaterTest{
+public class AtomicIntegerFieldUpdaterTest {
 
 
     private static AtomicIntegerFieldUpdater<AtomicIntegerFieldUpdaterTest> updater = AtomicIntegerFieldUpdater.newUpdater(AtomicIntegerFieldUpdaterTest.class, "count");
-
+    private static AtomicIntegerFieldUpdaterTest atomicIntegerUpdater = new AtomicIntegerFieldUpdaterTest();
     @Getter
     public volatile int count = 100;
 
-    private static AtomicIntegerFieldUpdaterTest atomicIntegerUpdater = new AtomicIntegerFieldUpdaterTest();
-
     public static void main(String[] args) {
         // volatile  非static修饰的字段可以更新  如果是100 就更新为120
-        if (updater.compareAndSet(atomicIntegerUpdater, 100, 120)){
+        if (updater.compareAndSet(atomicIntegerUpdater, 100, 120)) {
             log.info("update success 1 ,{}", atomicIntegerUpdater.getCount());
         }
 
-        if (updater.compareAndSet(atomicIntegerUpdater, 100, 120)){
+        if (updater.compareAndSet(atomicIntegerUpdater, 100, 120)) {
             log.info("update success 2 ,{}", atomicIntegerUpdater.getCount());
-        }else {
+        } else {
             log.info("update failed.{}", atomicIntegerUpdater.getCount());
         }
 

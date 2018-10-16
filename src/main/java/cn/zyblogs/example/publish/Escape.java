@@ -14,18 +14,18 @@ public class Escape {
 
     private int thisCanBeEscape = 0;
 
-    public Escape(){
+    public Escape() {
         new InnerClass();
-    }
-
-    private class InnerClass{
-
-        public InnerClass(){
-            log.info("{}",Escape.this.thisCanBeEscape );
-        }
     }
 
     public static void main(String[] args) {
         new Escape();
+    }
+
+    private class InnerClass {
+
+        public InnerClass() {
+            log.info("{}", Escape.this.thisCanBeEscape);
+        }
     }
 }

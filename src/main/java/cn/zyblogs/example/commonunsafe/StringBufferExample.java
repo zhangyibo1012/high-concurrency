@@ -17,15 +17,13 @@ import java.util.concurrent.Semaphore;
 @Slf4j
 public class StringBufferExample {
 
+    public static StringBuffer stringBuffer = new StringBuffer();
     // 请求总数
     private static int clientTotal = 5000;
-
     /**
-     *  同时并发执行的线程数
+     * 同时并发执行的线程数
      */
     private static int threadTotal = 50;
-
-    public static StringBuffer stringBuffer = new StringBuffer();
 
     public static void main(String[] args) {
         // 线程池
@@ -37,8 +35,8 @@ public class StringBufferExample {
         // 所有的请求次数结束统计结果
         CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
 
-        for (int i = 0 ; i < clientTotal; i ++){
-            executorService.execute(()->{
+        for (int i = 0; i < clientTotal; i++) {
+            executorService.execute(() -> {
                 try {
                     // 是否允许被执行 如果达到一定并发数 可能会临时阻塞
                     semaphore.acquire();
@@ -56,14 +54,14 @@ public class StringBufferExample {
             countDownLatch.await();
             // 关闭线程池
             executorService.shutdown();
-            log.info("length:{}" ,stringBuffer.length());
+            log.info("length:{}", stringBuffer.length());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private static void update(){
-      stringBuffer.append("1");
+    private static void update() {
+        stringBuffer.append("1");
 
     }
 }

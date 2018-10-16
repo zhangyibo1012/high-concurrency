@@ -20,17 +20,17 @@ public class VectorExample {
     private static Vector<Integer> vector = new Vector<>();
 
     public static void main(String[] args) {
-        while (true){
-            IntStream.range(0,10 ).forEach((i)->vector.add(i));
+        while (true) {
+            IntStream.range(0, 10).forEach((i) -> vector.add(i));
 
             Thread t1 = new Thread(() -> {
-                for (int i = 0 ; i < vector.size(); i ++){
+                for (int i = 0; i < vector.size(); i++) {
                     vector.remove(i);
                 }
             });
 
             Thread t2 = new Thread(() -> {
-                for (int i = 0 ; i < vector.size(); i ++){
+                for (int i = 0; i < vector.size(); i++) {
                     vector.get(i);
                 }
             });

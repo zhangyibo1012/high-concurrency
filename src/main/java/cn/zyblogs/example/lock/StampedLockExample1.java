@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 public class StampedLockExample1 {
 
     /**
-     *  ReentrantLock VS Synchronized
-     *
-     *  ReentrantReadWriteLock
-     *  100 threads
-     *  99 threads need read lock
-     *  1  threads need write lock
+     * ReentrantLock VS Synchronized
+     * <p>
+     * ReentrantReadWriteLock
+     * 100 threads
+     * 99 threads need read lock
+     * 1  threads need write lock
      *
      * @param args
      */
@@ -36,16 +36,16 @@ public class StampedLockExample1 {
     public static void main(String[] args) {
 
         // 线程池
-    final     ExecutorService executor = Executors.newFixedThreadPool(10);
+        final ExecutorService executor = Executors.newFixedThreadPool(10);
 
-        Runnable readTask = () ->{
-         for (;;){
-              read();
-          }
+        Runnable readTask = () -> {
+            for (; ; ) {
+                read();
+            }
         };
 
-        Runnable writeTask = () ->{
-            for (;;){
+        Runnable writeTask = () -> {
+            for (; ; ) {
                 write();
             }
         };
@@ -62,11 +62,11 @@ public class StampedLockExample1 {
         executor.submit(writeTask);
     }
 
-    private static void read(){
+    private static void read() {
         long stamped = -1;
         try {
             stamped = lock.readLock();
-            Optional.of( DATA.stream().map(String::valueOf).collect(Collectors.joining("读取数据", "R-", ""))).ifPresent(System.out::println);
+            Optional.of(DATA.stream().map(String::valueOf).collect(Collectors.joining("读取数据", "R-", ""))).ifPresent(System.out::println);
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -75,7 +75,7 @@ public class StampedLockExample1 {
         }
     }
 
-    private static void write(){
+    private static void write() {
         long stamp = -1;
         try {
             stamp = lock.writeLock();

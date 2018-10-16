@@ -17,7 +17,7 @@ public class ThreadPoolTest3 {
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-        for (int i = 0 ; i < 10 ; i ++){
+        for (int i = 0; i < 10; i++) {
             final int index = i;
             executorService.execute(() -> log.info("task:{}", index));
         }

@@ -7,7 +7,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -21,15 +20,13 @@ import java.util.concurrent.atomic.AtomicLong;
 @ThreadSafe
 public class AtomicLongTest {
 
+    public static AtomicLong count = new AtomicLong(0);
     // 请求总数
     private static int clientTotal = 5000;
-
     /**
-     *  同时并发执行的线程数
+     * 同时并发执行的线程数
      */
     private static int threadTotal = 50;
-
-    public static AtomicLong count = new AtomicLong(0);
 
     public static void main(String[] args) {
         // 线程池
@@ -41,8 +38,8 @@ public class AtomicLongTest {
         // 所有的请求结束统计结果
         CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
 
-        for (int i = 0 ; i < clientTotal; i ++){
-            executorService.execute(()->{
+        for (int i = 0; i < clientTotal; i++) {
+            executorService.execute(() -> {
                 try {
                     // 是否允许被执行 如果达到一定并发数 可能会临时阻塞
                     semaphore.acquire();
@@ -60,13 +57,13 @@ public class AtomicLongTest {
             countDownLatch.await();
             // 关闭线程池
             executorService.shutdown();
-            log.info("count:{}" ,count.get());
+            log.info("count:{}", count.get());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private static void add(){
+    private static void add() {
         // 先增加 后后去值
         count.incrementAndGet();
 

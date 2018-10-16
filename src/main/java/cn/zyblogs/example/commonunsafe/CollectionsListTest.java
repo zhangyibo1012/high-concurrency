@@ -24,12 +24,12 @@ public class CollectionsListTest {
     public static int clientTotal = 6000;
 
     /**
-     *   同时并发执行的线程数
+     * 同时并发执行的线程数
      */
     public static int threadTotal = 200;
 
     /**
-     *  同步容器
+     * 同步容器
      */
     private static List<Integer> list = Collections.synchronizedList(Lists.newArrayList());
 
@@ -37,9 +37,9 @@ public class CollectionsListTest {
         ExecutorService executorService = Executors.newCachedThreadPool();
         final Semaphore semaphore = new Semaphore(threadTotal);
         final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
-        for (int i = 0; i < clientTotal; i ++){
+        for (int i = 0; i < clientTotal; i++) {
             final int count = i;
-            executorService.execute(()->{
+            executorService.execute(() -> {
                 try {
                     // 是否允许被执行 如果达到一定并发数 可能会临时阻塞
                     semaphore.acquire();
@@ -47,7 +47,7 @@ public class CollectionsListTest {
                     // 释放
                     semaphore.release();
                 } catch (InterruptedException ex) {
-                   log.error("exception", ex);
+                    log.error("exception", ex);
                 }
                 // 每执行一次减1
                 countDownLatch.countDown();
@@ -58,7 +58,7 @@ public class CollectionsListTest {
         countDownLatch.await();
         // 关闭线程池
         executorService.shutdown();
-        log.info("size:{}",list.size() );
+        log.info("size:{}", list.size());
     }
 
     private static void update(int count) {
