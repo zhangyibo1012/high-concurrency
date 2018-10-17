@@ -1,4 +1,4 @@
-package cn.zyblogs.example.disruptor;
+package cn.zyblogs.example.disruptor.demo;
 
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.YieldingWaitStrategy;
@@ -55,7 +55,10 @@ public class LongEventMain {
         // 发布事件
         final RingBuffer<LongEvent> ringBuffer = disruptor.getRingBuffer();
 
-        LongEventProducer producer = new LongEventProducer(ringBuffer);
+//        LongEventProducer producer = new LongEventProducer(ringBuffer);
+
+        LongEventProducerWithTranslator producer = new LongEventProducerWithTranslator(ringBuffer);
+
         // 定义一个新的字节缓冲区
         ByteBuffer byteBuffer = ByteBuffer.allocate(8);
 

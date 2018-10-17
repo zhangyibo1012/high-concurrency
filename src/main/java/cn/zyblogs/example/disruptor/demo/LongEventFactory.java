@@ -1,4 +1,4 @@
-package cn.zyblogs.example.disruptor;
+package cn.zyblogs.example.disruptor.demo;
 
 import com.lmax.disruptor.EventFactory;
 
