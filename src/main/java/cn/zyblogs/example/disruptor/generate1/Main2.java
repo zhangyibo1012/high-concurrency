@@ -15,12 +15,7 @@ public class Main2 {
         int BUFFER_SIZE=1024;  
         int THREAD_NUMBERS=4;  
         
-        EventFactory<Trade> eventFactory = new EventFactory<Trade>() {  
-            @Override
-            public Trade newInstance() {
-                return new Trade();  
-            }  
-        };  
+        EventFactory<Trade> eventFactory = () -> new Trade();
         
         RingBuffer<Trade> ringBuffer = RingBuffer.createSingleProducer(eventFactory, BUFFER_SIZE);  
           

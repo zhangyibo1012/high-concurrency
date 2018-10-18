@@ -7,6 +7,7 @@ import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Phaser;
 
 public class Main {
 	
@@ -48,10 +49,12 @@ public class Main {
 		workerPool.start(executor);
 
 		// 100个生产者生产数据 100 * 100
+//		Phaser phaser = new Phaser(1);
 		final CountDownLatch latch = new CountDownLatch(1);
         for (int i = 0; i < 100; i++) {  
         	final Producer p = new Producer(ringBuffer);
         	new Thread(new Runnable() {
+
 				@Override
 				public void run() {
 					try {
@@ -64,10 +67,11 @@ public class Main {
 					}
 				}
 			}).start();
-        } 
+        }
         Thread.sleep(2000);
         System.out.println("---------------开始生产-----------------");
         latch.countDown();
+//		phaser.arriveAndAwaitAdvance();
         Thread.sleep(5000);
         System.out.println("总数:" + consumers[0].getCount() );
 

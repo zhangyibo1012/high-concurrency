@@ -1,36 +1,32 @@
 package cn.zyblogs.example.disruptor.demo;
 
-import java.nio.ByteBuffer;
-
 import com.lmax.disruptor.EventTranslatorOneArg;
 import com.lmax.disruptor.RingBuffer;
 
-/**
- * Disruptor 3.0提供了lambda式的API。这样可以把一些复杂的操作放在Ring Buffer，
- * 所以在Disruptor3.0以后的版本最好使用Event Publisher或者Event Translator来发布事件
- */
+import java.nio.ByteBuffer;
+
+
 public class LongEventProducerWithTranslator {
 
-	//一个translator可以看做一个事件初始化器，publicEvent方法会调用它
-	//填充Event
-	private static final EventTranslatorOneArg<LongEvent, ByteBuffer> TRANSLATOR =
-			new EventTranslatorOneArg<LongEvent, ByteBuffer>() {
-				@Override
-				public void translateTo(LongEvent event, long sequeue, ByteBuffer buffer) {
-					event.setValue(buffer.getLong(0));
-				}
-			};
-	
 	private final RingBuffer<LongEvent> ringBuffer;
-	
 	public LongEventProducerWithTranslator(RingBuffer<LongEvent> ringBuffer) {
 		this.ringBuffer = ringBuffer;
 	}
-	
-	public void onData(ByteBuffer buffer){
+	// 一个Translator可以看做一个事件初始化器 publicEvent方法会调用它
+	// disruptor3推荐这样使用
+	private static final EventTranslatorOneArg<LongEvent, ByteBuffer> TRANSLATOR =
+			(event, sequeue, byteBuffer) -> {
+				// 从byteBuffer中读取传过来的值
+				byteBuffer.flip();
+				byte[] dst = new byte[byteBuffer.limit()];
+				byteBuffer.get(dst, 0, dst.length);
+				byteBuffer.clear();
+				// 为event赋值
+				event.setValue(new String(dst));
+				event.setId(sequeue);
+			};
+	public void sendData(ByteBuffer buffer) {
 		ringBuffer.publishEvent(TRANSLATOR, buffer);
 	}
-	
-	
-	
+
 }

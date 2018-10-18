@@ -2,18 +2,21 @@ package cn.zyblogs.example.disruptor.demo;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @Title: LongEvent.java
  * @Package cn.zyblogs.example.disruptor
- * @Description: TODO 生产者传递一个long类型的值给消费者，而消费者消费这个数据的方式仅仅是把它打印出来
+ * @Description: TODO  用来传递数据对象
  * @Author ZhangYB
  * @Version V1.0
  */
 @Getter
 @Setter
+@ToString
 public class LongEvent {
 
-    private long value;
+    private long id;
+    private String value;
 
 }
